@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+    <div class="container mt-5">
+        <!-- Authentication Section -->
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            {% if request.user.is_authenticated %}
+                <p class="h5">Hi, <strong>{{ request.user }}</strong>! 👋</p>
+                <form action="{% url 'logout' %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Logout</button>
+                </form>
+            {% else %}
+                <a href="{% url 'login' %}" class="btn btn-primary">Login</a>
+            {% endif %}
+        </div>
+
+        <hr>
+
+        <!-- To-Do List Header -->
+        <h1 class="text-center">📌 To-Do List</h1>
+
+        <!-- Add Item Button -->
+        <div class="text-center my-3">
+            <a href="{% url 'task_create' %}" class="btn btn-success">➕ Add Item</a>
+        </div>
+
+        <!-- Search Form -->
+        <form id="searchForm" action="" method="get" class="input-group mb-4">
+            <input type="text" name="search" class="form-control" placeholder="Search tasks..." value="{{ search }}">
+            <button type="submit" class="btn btn-primary">🔍 Search</button>
+            {% if search %}
+                <!-- Cancel Search (X) Button -->
+                <a href="{% url 'tasks' %}"><button type="button" class="btn btn-outline-secondary" id="clearSearch" onclick="clearSearch()">❌</button></a>
+            {% endif %}
+        </form>
+        
+        <!-- Task List -->
+        <div class="card shadow">
+            <div class="card-body">
+                {% if tasks %}
+                    <ul class="list-group">
+                        {% for task in tasks %}
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <a href="{% url 'task_detail' task.id %}" class="text-decoration-none">{{ task.title }}</a>
+                                <div>
+                                    <a href="{% url 'task_update' task.id %}" class="btn btn-warning btn-sm">✏️ Edit</a>
+                                    <a href="{% url 'task_delete' task.id %}" class="btn btn-danger btn-sm">🗑️ Delete</a>
+                                </div>
+                            </li>
+                            <p></p>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p class="text-center text-muted">No tasks available.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom JavaScript -->
+    <script>
+        function clearSearch() {
+            // Clear the search input
+            document.querySelector('input[name="search"]').value = '';
+
+            // Submit the form to reset the search
+            document.getElementById('searchForm').submit();
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Task</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light d-flex justify-content-center align-items-center vh-100">
+
+    <div class="card shadow-sm p-4" style="width: 400px;">
+        <h3 class="text-center mb-4">📝 Edit Task</h3>
+        
+        <!-- Go Back Button -->
+        <div class="mb-3">
+            <a href="{% url 'tasks' %}" class="btn btn-secondary">🔙 Go Back</a>
+        </div>
+
+        <!-- Task Form -->
+        <form action="" method="post">
+            {% csrf_token %}
+            
+            <!-- Title Field -->
+            <div class="mb-3">
+                <label for="{{ form.title.id_for_label }}" class="form-label">Task Title</label>
+                {{ form.title }}  <!-- This renders the form field with Bootstrap classes -->
+            </div>
+
+            <!-- Description Field -->
+            <div class="mb-3">
+                <label for="{{ form.description.id_for_label }}" class="form-label">Description</label>
+                <textarea name="description" class="form-control" id="{{ form.description.id_for_label }}" rows="4">{{ form.description.value }}</textarea> <!-- Added Bootstrap class to the description field -->
+            </div>
+
+            <!-- Status Field -->
+            <div class="mb-3">
+                <label for="{{ form.status.id_for_label }}" class="form-label">Status</label>
+                {{ form.status }}
+            </div>
+
+            <!-- Priority Field -->
+            <div class="mb-3">
+                <label for="{{ form.priority.id_for_label }}" class="form-label">Priority</label>
+                {{ form.priority }}
+            </div>
+
+            <!-- Submit Button -->
+            <div class="text-center">
+                <button type="submit" class="btn btn-success">Save Changes</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
