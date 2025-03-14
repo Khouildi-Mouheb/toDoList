@@ -1,2 +1,2 @@
 # toDoList
-A simple Django-based To-Do List application that allows users to create, update, and delete tasks. Features user authentication, task management, and a clean UI for productivity.
+A Django-based To-Do List application with a Bootstrap-powered frontend. Built using class-based views (CBVs) and Django's built-in authentication system, allowing users to register, log in, and manage their tasks efficiently. The project includes helpful comments in the code to guide developers and make it easier to understand.
